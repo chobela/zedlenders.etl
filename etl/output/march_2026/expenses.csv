@@ -1,0 +1,117 @@
+date,description,amount,reference,action
+2026-03-01,Talk Time,1000.0,,SKIP
+2026-03-01,Tax Returning Fee (Tax),1500.0,,SKIP
+2026-03-05,Fuel GL,6000.0,,SKIP
+2026-03-30,Rent,13545.0,EXP-MAR26-00004,CREATE
+2026-03-27,Electricity,500.0,,SKIP
+2026-03-02,Cleaning services,1000.0,,SKIP
+2026-03-24,Salary,14300.0,,SKIP
+2026-03-01,Other office utilities,500.0,,SKIP
+2026-03-29,Internet,800.0,EXP-MAR26-00009,CREATE
+2026-03-03,Garbage collection,100.0,,SKIP
+2026-03-03,Auris Insurance,1100.0,,SKIP
+2026-03-03,Insurance,1125.0,,SKIP
+2026-03-05,500ml Case of  Water,144.0,EXP-MAR26-00013,CREATE
+2026-03-17,Datos Consultancy - Email and Web Hosting,1218.0,,SKIP
+2026-03-25,Reddy - Bank charge,1.0,,SKIP
+2026-03-23,Isaac Masiye - Bank charge,4.0,,SKIP
+2026-03-28,Chisokota Packson Bildad - Bank charge,4.0,,SKIP
+2026-03-12,Michael Likuluta - Bank charge,6.0,EXP-MAR26-00018,CREATE
+2026-03-13,Robert Mphande - Bank charge,12.0,,SKIP
+2026-03-13,Alice Mubukwanu - Bank charge,6.0,,SKIP
+2026-03-17,Muhau Mooto - Bank charge,4.0,,SKIP
+2026-03-19,Lupande Joseph Chomba - Bank charge,6.0,,SKIP
+2026-03-22,Walter - Bank charge,4.0,,SKIP
+2026-03-23,Memory Kumwenda - Bank charge,6.0,,SKIP
+2026-03-09,Robinson Kunda - Bank charge,12.0,,SKIP
+2026-03-24,Shem Ngwira - Bank charge,4.0,,SKIP
+2026-03-28,Samuel Wongani - Bank charge,3.0,,SKIP
+2026-03-29,Edna Gondwe - Bank charge,3.0,,SKIP
+2026-03-30,Benjamin Mwanza - Bank charge,6.0,,SKIP
+2026-03-30,Royd Mumba - Bank charge,6.0,,SKIP
+2026-03-30,Izukanji Namwila - Bank charge,4.0,,SKIP
+2026-03-30,George Mamonwa - Bank charge,12.0,,SKIP
+2026-03-05,Reddy - Bank charge,12.0,,SKIP
+2026-03-30,Kanampeta - Bank charge,12.0,,SKIP
+2026-03-06,Deborah Mbawa - Bank charge,12.0,,SKIP
+2026-03-20,Theresa Gumbo - Bank charge,6.0,,SKIP
+2026-03-09,Robert Mphande - Bank charge,12.0,,SKIP
+2026-03-07,Taonga Mtonga - Bank charge,4.0,,SKIP
+2026-03-25,Nawa Mukombe - Bank charge,4.0,,SKIP
+2026-03-09,Yombo - Bank charge,12.0,,SKIP
+2026-03-10,Musaku Chisunka - Bank charge,12.0,,SKIP
+2026-03-12,Jutem Business Ventures - Bank charge,12.0,,SKIP
+2026-03-05,Malombola Chiwila - Bank charge,6.0,,SKIP
+2026-03-05,Natasha Shinondo - Bank charge,12.0,,SKIP
+2026-03-13,Emmanuel Mzeka - Bank charge,12.0,,SKIP
+2026-03-13,Elizabeth Mwansa - Bank charge,3.0,,SKIP
+2026-03-16,Tonny Simbaya - Bank charge,12.0,,SKIP
+2026-03-03,Mukelabai Akatumwa - Bank charge,12.0,,SKIP
+2026-03-18,Emmanuel Mzeka - Bank charge,12.0,,SKIP
+2026-03-18,George Mamonwa - Bank charge,12.0,,SKIP
+2026-03-04,Sugzo M. Dzekedzeke - Bank charge,12.0,,SKIP
+2026-03-13,Clayford Mudenda - Bank charge,12.0,,SKIP
+2026-03-20,Mofu Mumba - Bank charge,12.0,,SKIP
+2026-03-21,Fernando Kasuba - Bank charge,12.0,,SKIP
+2026-03-20,Lupande Joseph Chomba - Bank charge,4.0,,SKIP
+2026-03-21,Kanampeta - Bank charge,12.0,,SKIP
+2026-03-23,Fatima Chisenga - Bank charge,12.0,,SKIP
+2026-03-23,Patrick Simfukwe - Bank charge,12.0,,SKIP
+2026-03-06,Natasha Shinondo - Bank charge,12.0,,SKIP
+2026-03-21,Nancy Muyunda - Mobile charge,50.0,,SKIP
+2026-03-24,Vincent Chimuka - Bank charge,12.0,,SKIP
+2026-03-03,Jeffrey Cimankata - Bank charge,12.0,,SKIP
+2026-03-04,Mofu Mumba - Bank charge,12.0,,SKIP
+2026-03-25,Gift Tembo - Mobile charge,50.0,,SKIP
+2026-03-25,Nambela Namwayi - Bank charge,12.0,,SKIP
+2026-03-12,Emmanuel Mzeka - Bank charge,12.0,,SKIP
+2026-03-27,Mumbi Pamela Mwansa - Bank charge,6.0,,SKIP
+2026-03-21,Mutinta Nketani - Bank charge,12.0,,SKIP
+2026-03-26,Chanda Daniel - Bank charge,12.0,,SKIP
+2026-03-26,James Mali - Bank charge,12.0,,SKIP
+2026-03-24,Nathan Benn - Bank charge,12.0,,SKIP
+2026-03-13,Buumba Emmanuel Makondo - Mobile charge,50.0,,SKIP
+2026-03-21,Chitundu Sinyangwe - Bank charge,12.0,,SKIP
+2026-03-27,Emmanuel Chilufya - Bank charge,12.0,,SKIP
+2026-03-28,Yombo - Bank charge,12.0,,SKIP
+2026-03-27,Leeroy Manda Chisakula - Mobile charge,50.0,,SKIP
+2026-03-12,Taonga Margaret Ngambi - Bank charge,12.0,,SKIP
+2026-03-06,Kapikanya - Bank charge,12.0,,SKIP
+2026-03-27,Febian Mubuyaeta - Bank charge,12.0,,SKIP
+2026-03-30,Mofu Mumba - Bank charge,12.0,,SKIP
+2026-03-30,Frank Chisanga - Bank charge,12.0,,SKIP
+2026-03-28,Benjamin Mwanza - Mobile charge,30.0,,SKIP
+2026-03-25,Nalishebo Mangambwa - Bank charge,12.0,,SKIP
+2026-03-21,Kingsley - Bank charge,12.0,,SKIP
+2026-03-25,Gwati Himululi - Bank charge,12.0,,SKIP
+2026-03-29,Mwaka Milimo - Bank charge,4.0,,SKIP
+2026-03-22,Kaluba Saeli - Mobile charge,30.0,,SKIP
+2026-03-27,Mambwe Mubanga Mukanda - Bank charge,4.0,,SKIP
+2026-03-22,Anthony Chansa - Bank charge,4.0,,SKIP
+2026-03-12,Mate M - Bank charge,12.0,,SKIP
+2026-03-07,Deborah Mbawa - Bank charge,12.0,,SKIP
+2026-03-30,Muliokela - Bank charge,6.0,,SKIP
+2026-03-30,Makumbi - Bank charge,12.0,,SKIP
+2026-03-28,Shingaipe - Bank charge,12.0,,SKIP
+2026-03-28,Michael Phiri - Bank charge,12.0,,SKIP
+2026-03-27,Nawakwi Mumba - Bank charge,12.0,,SKIP
+2026-03-11,Amingtone - Bank charge,12.0,EXP-MAR26-00097,CREATE
+2026-03-30,Money Acumen (Lyapa and Theresa) - Bank charge,4.0,EXP-MAR26-00098,CREATE
+2026-03-23,Bright Chansa - Bank charge,4.0,EXP-MAR26-00099,CREATE
+2026-03-31,Mofu Mumba - Bank charge,12.0,,SKIP
+2026-03-31,Jonathan Mukonki - Mobile charge,50.0,EXP-MAR26-00101,CREATE
+2026-03-24,John Penge Penge - Bank charge,12.0,EXP-MAR26-00102,CREATE
+2026-03-28,Brenda Mwamba - Bank charge,12.0,EXP-MAR26-00103,CREATE
+2026-03-13,Kanampeta - Mobile charge,50.0,EXP-MAR26-00104,CREATE
+2026-03-13,Jeffrey Chimankata - Bank charge,12.0,EXP-MAR26-00105,CREATE
+2026-03-26,Buumba Emmanuel Makondo - Mobile charge,50.0,,SKIP
+2026-03-24,Natasha Shinondo - Bank charge,12.0,,SKIP
+2026-03-21,Wilson Kundwe Mayumbela - Bank charge,12.0,EXP-MAR26-00108,CREATE
+2026-03-27,Samuel Mumba - Mobile charge,30.0,EXP-MAR26-00109,CREATE
+2026-03-27,Jimmy Kateya - Bank charge,12.0,EXP-MAR26-00110,CREATE
+2026-03-30,Chibwe Gabriel Mwansa - Bank charge,12.0,EXP-MAR26-00111,CREATE
+2026-03-30,Acklane Tembo - Bank charge,12.0,EXP-MAR26-00112,CREATE
+2026-03-26,Mooka - bank charge,12.0,EXP-MAR26-00113,CREATE
+2026-03-30,Jeffrey Chimankata - Bank charge,12.0,EXP-MAR26-00114,CREATE
+2026-03-14,A.B.M (Kwezekani) - Bank charge,3.0,,SKIP
+2026-03-03,Tracking Fee - Mathew Ndaba (BAZ 8998),1500.0,EXP-MAR26-00116,CREATE

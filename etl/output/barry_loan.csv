@@ -1,0 +1,2 @@
+loan_reference,borrower_nrc,loan_product_name,amount,custom_interest_rate,application_date,loan_purpose,branch_name,loan_status,approval_date,amount_type,monthly_amount
+JUTEM-00172,1000038/00/1,Business Micro Loan,600,25.0,2021-08-01,Business,Lusaka,6,2021-08-01,,600
