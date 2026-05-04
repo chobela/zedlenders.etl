@@ -19,6 +19,7 @@ import os
 import sys
 import re
 import csv
+import json
 import argparse
 import time
 import calendar
@@ -1184,6 +1185,63 @@ def main():
         print(f"\nTo execute for real:")
         print(f"  export DIRECTUS_TOKEN='your-token'")
         print(f"  python3 etl/monthly_update.py --sheet {SHEET_NAME!r} --execute")
+
+    summary = {
+        "mode": "execute" if args.execute else "dry_run",
+        "sheet": SHEET_NAME,
+        "parsed": {
+            "loans_total": len(loans),
+            "loans_paid": paid,
+            "loans_pending": pending,
+            "interest_expenses": len(interest_expenses),
+            "tracking_fees": len(tracking_fees),
+            "other_expenses": len(other_expenses),
+        },
+        "totals": {
+            "loans_amount": round(total_loaned, 2),
+            "expected_amount": round(total_expected, 2),
+            "interest_income": round(total_profit, 2),
+            "interest_expense": round(total_ie, 2),
+            "other_expenses": round(total_expenses, 2),
+            "tracking_fees": round(total_tracking, 2),
+        },
+        "actions": {},
+        "errors": [],
+    }
+
+    if "loans" in all_stats:
+        s = all_stats["loans"]
+        summary["actions"].update({
+            "matched_existing": s["matched_existing"],
+            "amort_updated": s["amort_updated"],
+            "status_to_paid": s["status_to_paid"],
+            "payments_created": s["payments_created"],
+            "loans_status_updated": s["loans_status_updated"],
+            "new_borrowers": s["new_borrowers"],
+            "new_loans": s["new_loans"],
+            "new_amortization": s["new_amortization"],
+        })
+        summary["errors"].extend(s["errors"])
+
+    if "interest" in all_stats:
+        s = all_stats["interest"]
+        summary["actions"].update({
+            "interest_expenses_created": s["created"],
+            "interest_expenses_skipped": s["skipped"],
+        })
+        summary["errors"].extend(s["errors"])
+
+    if "expenses" in all_stats:
+        s = all_stats["expenses"]
+        summary["actions"].update({
+            "expenses_created": s["created"],
+        })
+        summary["errors"].extend(s["errors"])
+
+    print()
+    print("[SUMMARY]")
+    print(json.dumps(summary))
+    print("[/SUMMARY]")
 
 
 if __name__ == "__main__":
