@@ -27,6 +27,7 @@ import uuid
 from pathlib import Path
 
 import openpyxl
+from dotenv import load_dotenv
 from fastapi import FastAPI, File, Form, Header, HTTPException, UploadFile
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import StreamingResponse
@@ -34,6 +35,8 @@ from fastapi.responses import StreamingResponse
 ETL_DIR = Path(__file__).resolve().parent
 SCRIPT = ETL_DIR / "monthly_update.py"
 ALLOWED_STEPS = {"loans", "interest", "expenses", "all"}
+
+load_dotenv(ETL_DIR.parent / ".env")
 
 # Same shared secret the rest of the stack uses (set via env var on the server).
 SHARED_SECRET = os.environ.get("ETL_API_TOKEN")
