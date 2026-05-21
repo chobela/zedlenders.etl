@@ -47,7 +47,7 @@ ALLOWED_ORIGINS = [
     o.strip()
     for o in os.environ.get(
         "ETL_API_ORIGINS",
-        "https://zedlenders.pickmesms.com,http://localhost:3000",
+        "https://zedlenders.pickmesms.com,http://localhost:3000,https://kwachaplus.com,https://www.kwachaplus.com",
     ).split(",")
     if o.strip()
 ]
@@ -63,7 +63,8 @@ app.add_middleware(
 
 def _check_auth(authorization: str | None):
     if not SHARED_SECRET:
-        raise HTTPException(500, "ETL_API_TOKEN is not configured on the server")
+        raise HTTPException(
+            500, "ETL_API_TOKEN is not configured on the server")
     expected = f"Bearer {SHARED_SECRET}"
     if authorization != expected:
         raise HTTPException(401, "unauthorized")
@@ -113,9 +114,11 @@ async def monthly_update(
     _check_auth(authorization)
 
     if step not in ALLOWED_STEPS:
-        raise HTTPException(400, f"step must be one of {sorted(ALLOWED_STEPS)}")
+        raise HTTPException(
+            400, f"step must be one of {sorted(ALLOWED_STEPS)}")
     if not DIRECTUS_TOKEN:
-        raise HTTPException(500, "DIRECTUS_TOKEN is not configured on the server")
+        raise HTTPException(
+            500, "DIRECTUS_TOKEN is not configured on the server")
 
     workbook = _save_upload(file)
 
