@@ -146,6 +146,11 @@ def make_date(day):
     return f"{YEAR}-{MONTH:02d}-01"
 
 
+def normalize_text(value):
+    """Normalize free text for conservative dedupe/matching."""
+    return re.sub(r"\s+", " ", str(value or "").strip()).lower()
+
+
 # ─── Token ───────────────────────────────────────────────────────────────────
 
 def get_token():
@@ -406,16 +411,25 @@ def fetch_borrowers(token):
 
 
 def fetch_month_amortization(token):
-    """Fetch ALL amortization entries for the current month (no company field on this table)."""
+    """Fetch current-month amortization entries and keep only company 22 rows."""
     print(f"Fetching existing {MONTH_NAME} amortization entries...")
     entries = api_get(token, "/items/amortization", {
         "filter[due_date][_gte]": month_start_iso(),
         "filter[due_date][_lte]": month_end_iso(),
-        "fields": "*",
+        "fields": "id,borrower_nrc,amount_due,due_date,status,expected_amount,profit,loan_reference.id,loan_reference.company",
         "limit": -1,
     })
-    print(f"  {len(entries)} existing amortization entries for {MONTH_NAME}")
-    return entries
+    company_entries = []
+    for entry in entries:
+        loan_ref = entry.get("loan_reference")
+        company_id = loan_ref.get("company") if isinstance(loan_ref, dict) else None
+        if str(company_id) == str(COMPANY_ID):
+            company_entries.append(entry)
+    print(
+        f"  {len(company_entries)} existing amortization entries for {MONTH_NAME} "
+        f"(filtered from {len(entries)} month rows)"
+    )
+    return company_entries
 
 
 def fetch_loans_for_company(token):
@@ -486,11 +500,6 @@ def find_borrower(canonical, by_name, by_nrc, nrc_map):
     if canonical_lower in by_name:
         return by_name[canonical_lower]["id"]
 
-    # Partial match (the name is contained in or contains an existing name)
-    for name_key, b in by_name.items():
-        if canonical_lower in name_key or name_key in canonical_lower:
-            return b["id"]
-
     return None
 
 
@@ -524,13 +533,16 @@ def process_loans(loans, token, execute=False):
 
     print(f"\n  Product ID: {product_id}, Branch: {branch_id}, Borrower Role: {role_id}")
 
-    # Build amortization index: (borrower_nrc, amount_rounded) → amort entry
-    # The amortization table has borrower_nrc directly, no need for relational joins
-    amort_by_nrc_amount = {}
+    # Build amortization indexes with exact due-date matching and safe fallbacks.
+    amort_by_nrc_amount_due = defaultdict(list)
+    amort_by_nrc_amount = defaultdict(list)
     for ea in existing_amort:
         nrc = ea.get("borrower_nrc", "")
         amount_key = round(float(ea.get("amount_due", 0)), 0)
-        amort_by_nrc_amount[(nrc, amount_key)] = ea
+        due_date = str(ea.get("due_date") or "")
+        if nrc:
+            amort_by_nrc_amount_due[(nrc, amount_key, due_date)].append(ea)
+            amort_by_nrc_amount[(nrc, amount_key)].append(ea)
 
     # Also build a reverse NRC → name map from existing borrowers for logging
     nrc_to_name = {}
@@ -574,6 +586,7 @@ def process_loans(loans, token, execute=False):
         log_files[name] = (f, w)
 
     pmt_counter = 0
+    matched_amort_ids = set()
 
     for idx, loan_row in enumerate(loans):
         canonical = loan_row["canonical_name"]
@@ -583,9 +596,37 @@ def process_loans(loans, token, execute=False):
         # ── A) Try to match to an existing amortization entry via NRC ──
         # First find this borrower's NRC
         borrower_nrc = nrc_map.get(canonical_lower) or nrc_map.get(canonical)
-        matched_amort = amort_by_nrc_amount.get((borrower_nrc, amount_key)) if borrower_nrc else None
+        matched_amort = None
+        if borrower_nrc:
+            exact_candidates = [
+                ea for ea in amort_by_nrc_amount_due.get(
+                    (borrower_nrc, amount_key, loan_row["due_date"]), []
+                )
+                if ea.get("id") not in matched_amort_ids
+            ]
+            if len(exact_candidates) == 1:
+                matched_amort = exact_candidates[0]
+            elif len(exact_candidates) > 1:
+                stats["errors"].append(
+                    f"Ambiguous amortization match for {canonical} "
+                    f"(NRC {borrower_nrc}, amount {loan_row['amount']}, due {loan_row['due_date']})"
+                )
+                print(
+                    f"  ! Ambiguous amortization match for {canonical} "
+                    f"(NRC {borrower_nrc}, amount {loan_row['amount']}, due {loan_row['due_date']})"
+                )
+                continue
+
+            if not matched_amort:
+                amount_candidates = [
+                    ea for ea in amort_by_nrc_amount.get((borrower_nrc, amount_key), [])
+                    if ea.get("id") not in matched_amort_ids
+                ]
+                if len(amount_candidates) == 1:
+                    matched_amort = amount_candidates[0]
 
         if matched_amort:
+            matched_amort_ids.add(matched_amort["id"])
             amort_id = matched_amort["id"]
             loan_ref = matched_amort.get("loan_reference")
             loan_id = loan_ref["id"] if isinstance(loan_ref, dict) else loan_ref
@@ -970,12 +1011,15 @@ def process_expenses(other_expenses, tracking_fees, token, execute=False):
         "filter[transaction_type][_eq]": "Operational Cost",
         "filter[transaction_date][_gte]": month_start_iso(),
         "filter[transaction_date][_lte]": month_end_iso(),
-        "fields": "id,reference_number,notes,amount",
+        "fields": "id,reference_number,notes,amount,transaction_date",
         "limit": -1,
     })
-    existing_refs = {e.get("reference_number", "") for e in existing}
     existing_set = {
-        (e.get("notes", "").lower(), round(float(e.get("amount", 0)), 0))
+        (
+            str(e.get("transaction_date") or ""),
+            normalize_text(e.get("notes", "")),
+            round(float(e.get("amount", 0) or 0), 2),
+        )
         for e in existing
     }
     print(f"  {len(existing)} existing {MONTH_NAME} expense transactions")
@@ -1009,7 +1053,11 @@ def process_expenses(other_expenses, tracking_fees, token, execute=False):
         running_balance = account_balance
 
         for idx, exp in enumerate(all_expenses):
-            key = (exp["description"].lower(), round(exp["amount"], 0))
+            key = (
+                exp["date"],
+                normalize_text(exp["description"]),
+                round(float(exp["amount"]), 2),
+            )
             if key in existing_set:
                 writer.writerow([exp["date"], exp["description"], exp["amount"], "", "SKIP"])
                 skipped += 1
